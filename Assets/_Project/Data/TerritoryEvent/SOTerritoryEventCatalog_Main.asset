@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0d10c17db61efc40a8a13a308adb51f, type: 3}
+  m_Name: SOTerritoryEventCatalog_Main
+  m_EditorClassIdentifier: Assembly-CSharp::SOTerritoryEventCatalog
+  eventDefinitions:
+  - {fileID: 11400000, guid: 28a3b0a487924c0a8c994d76896b51a3, type: 2}
+  - {fileID: 11400000, guid: d43893f47d6c43d3a0bdbcfdb1123e7a, type: 2}
+  - {fileID: 11400000, guid: 19a7ee18007034441b6df2a1877d7080, type: 2}

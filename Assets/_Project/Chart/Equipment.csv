@@ -1,0 +1,15 @@
+EquipID,Type,Name,Description,Cost,Price,Sprite,MaxHealthBonus,MaxSpecialGaugeBonus,BasicAttackDamageBonus,SpecialAttackDamageBonus,MoveDelayScale,BasicAttackDelayScale,SpecialGaugeCostScale,SuccessfulHitCountForRecovery,RecoveryHealthOnTrigger,AdditionalHitFaceCountPerSide,AdditionalHitDamageMultiplier,EnableBossWeakPointSpawn,EnableHoldToMove,HoldMoveRepeatIntervalScale,EnableInputAdjust,UsePlayerTint,PlayerTintR,PlayerTintG,PlayerTintB,PlayerTintA
+equip_input,Input,특이한 이동,방향키 판정변경,0,100,Assets\_Project\Art,0,0,0,0,1,1,1,0,0,0,1,false,false,1,true,false,1,1,1,1
+equip_color_red,Color,빨강,빨간색으로 변합니다,0,100,Assets\_Project\Art,0,0,0,0,1,1,1,0,0,0,1,false,false,1,false,true,1,0.2,0.2,1
+equip_color_yellow,Color,노랑,노란색으로 변합니다,0,100,Assets\_Project\Art,0,0,0,0,1,1,1,0,0,0,1,false,false,1,false,true,1,0.92,0.2,1
+equip_color_green,Color,초록,초록색으로 변합니다,0,100,Assets\_Project\Art,0,0,0,0,1,1,1,0,0,0,1,false,false,1,false,true,0.2,0.85,0.3,1
+equip_color_blue,Color,파랑,파란색으로 변합니다,0,100,Assets\_Project\Art,0,0,0,0,1,1,1,0,0,0,1,false,false,1,false,true,0.2,0.45,1,1
+equip_color_purple,Color,보라,보라색으로 변합니다,0,100,Assets\_Project\Art,0,0,0,0,1,1,1,0,0,0,1,false,false,1,false,true,0.65,0.3,0.95,1
+equip_color_black,Color,검정,검은색으로 변합니다,0,100,Assets\_Project\Art,0,0,0,0,1,1,1,0,0,0,1,false,false,1,false,true,0.15,0.15,0.15,1
+equip_bossAttack,Battle,타격지점 확대,보스의 타격지점이 양방향으로 1face 확대되며 0.5배의 피해를 받습니다,5,100,Assets\_Project\Art,0,0,0,0,1,1,1,0,0,1,0.5,true,false,1,false,false,1,1,1,1
+equip_attackdelay,Battle,공격 딜레이 감소,일반 공격의 딜레이가 감소합니다,3,100,Assets\_Project\Art,0,0,0,0,1,0.8,1,0,0,0,1,false,false,1,false,false,1,1,1,1
+equip_specialAttackCost,Battle,특수자원 소모량 감소,특수 자원 소모량 감소,3,100,Assets\_Project\Art,0,0,0,0,1,1,0.8,0,0,0,1,false,false,1,false,false,1,1,1,1
+equip_dash,Movement,미끄러운 이동,이동키를 오래 누르면 쭉 움직입니다y,2,100,Assets\_Project\Art,0,0,0,0,0.9,1,1,0,0,0,1,false,true,0.7,false,false,1,1,1,1
+equip_movementDelay,Movement,이동 딜레이 감소,이동 딜레이가 감소합니다,3,100,Assets\_Project\Art,0,0,0,0,0.82,1,1,0,0,0,1,false,false,1,false,false,1,1,1,1
+equip_maxHpAdd,Defense,최대 체력 증가,최대 체력이 증가합니다,1,100,Assets\_Project\Art,2,0,0,0,1,1,1,0,0,0,1,false,false,1,false,false,1,1,1,1
+euip_lifesteal,Defense,흡혈,15번의 타격동안 자신이 피격되지 않으면 이후 5타격마다 피를 1회복합니다,4,100,Assets\_Project\Art,0,0,0,0,1,1,1,15,1,0,1,false,false,1,false,false,1,1,1,1

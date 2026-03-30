@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 668886628ce743f1a842b6a75d12d76a, type: 3}
+  m_Name: BossPool_Hard
+  m_EditorClassIdentifier: Assembly-CSharp::SOBossPoolDefinition
+  poolId: hard_pool
+  tier: 2
+  entries:
+  - bossDefinition: {fileID: 11400000, guid: cebc7814772141d19df14cd22f2f9c7f, type: 2}
+    weight: 1

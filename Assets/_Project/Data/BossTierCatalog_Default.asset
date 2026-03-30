@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed72261001ff4cd6af2cddae425f3739, type: 3}
+  m_Name: BossTierCatalog_Default
+  m_EditorClassIdentifier: Assembly-CSharp::SOBossTierCatalog
+  easyPool: {fileID: 11400000, guid: effa19e07f2b4c21ac5c4340e747fa01, type: 2}
+  normalPool: {fileID: 11400000, guid: 3f111d4b1cc446fb9db1f83c5e36db7c, type: 2}
+  hardPool: {fileID: 11400000, guid: 5610443fd60c4de88c14d9d9e41d900b, type: 2}
+  veryHardPool: {fileID: 11400000, guid: bbda2fb9af5d4b52af141a51588b51da, type: 2}

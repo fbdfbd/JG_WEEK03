@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68304be952148b940887f4fc3c0c0cf4, type: 3}
+  m_Name: euip_lifesteal
+  m_EditorClassIdentifier: Assembly-CSharp::SOEquipmentData
+  _equipmentId: euip_lifesteal
+  _equipmentType: 4
+  _displayName: "\uD761\uD608"
+  _description: "5\uD68C\uC758 \uCF64\uBCF4\uB9C8\uB2E4 \uCCB4\uB825\uACFC \uD2B9\uC218\uC790\uC6D0\uC744
+    3\uC529 \uD68C\uBCF5\uD569\uB2C8\uB2E4"
+  _cost: 6
+  _price: 200
+  _spriteAssetPath: Assets\_Project\Art
+  _spriteIcon: {fileID: 0}
+  _statModifiers:
+    maxHealthBonus: 0
+    maxSpecialGaugeBonus: 0
+    basicAttackDamageBonus: 0
+    specialAttackDamageBonus: 0
+    moveDelayScale: 1
+    basicAttackDelayScale: 1
+    specialGaugeCostScale: 1
+    successfulHitCountForRecovery: 0
+    recoveryHealthOnTrigger: 3
+    recoverySpecialGaugeOnTrigger: 3
+  _combatEffects:
+    additionalHitFaceCountPerSide: 0
+    additionalHitDamageMultiplier: 1
+    enableBossWeakPointSpawn: 0
+  _inputEffects:
+    enableHoldToMove: 0
+    holdMoveRepeatIntervalScale: 1
+    enableInputAdjust: 0
+    enableHoldToFire: 0
+  _visualEffects:
+    usePlayerTint: 0
+    playerTintColor: {r: 1, g: 1, b: 1, a: 1}

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a47ae25bb4f4e70826f2e68192124f5, type: 3}
+  m_Name: BossDefinition_EasyTemplate
+  m_EditorClassIdentifier: Assembly-CSharp::SOBossDefinition
+  bossId: easy_template
+  displayName: EASY
+  bossPrefab: {fileID: 3523383174291352188, guid: 02668173d0382f04798b13e0b87bc2a2, type: 3}
+  maxHealth: 40
+  patterns:
+  - {fileID: 11400000, guid: edb8f5a6d3044ebfb5c1319806f132ed, type: 2}
+  - {fileID: 11400000, guid: 3a77fbe80247a5544b0032878125a1cb, type: 2}
+  - {fileID: 11400000, guid: d2c3fd3d3854cf441b22da8bb40e1b0f, type: 2}
+  - {fileID: 11400000, guid: c02242eca05c70243a08db47ca18711d, type: 2}
+  - {fileID: 11400000, guid: f674297bc816d124e868d13fc73d3f6c, type: 2}

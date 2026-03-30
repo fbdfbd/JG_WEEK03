@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68304be952148b940887f4fc3c0c0cf4, type: 3}
+  m_Name: equip_color_green
+  m_EditorClassIdentifier: Assembly-CSharp::SOEquipmentData
+  _equipmentId: equip_color_green
+  _equipmentType: 1
+  _displayName: "\uCD08\uB85D"
+  _description: "\uCD08\uB85D\uC0C9\uC73C\uB85C \uBCC0\uD569\uB2C8\uB2E4"
+  _cost: 0
+  _price: 50
+  _spriteAssetPath: Assets\_Project\Art
+  _spriteIcon: {fileID: 0}
+  _statModifiers:
+    maxHealthBonus: 0
+    maxSpecialGaugeBonus: 0
+    basicAttackDamageBonus: 0
+    specialAttackDamageBonus: 0
+    moveDelayScale: 1
+    basicAttackDelayScale: 1
+    specialGaugeCostScale: 1
+    successfulHitCountForRecovery: 0
+    recoveryHealthOnTrigger: 0
+    recoverySpecialGaugeOnTrigger: 0
+  _combatEffects:
+    additionalHitFaceCountPerSide: 0
+    additionalHitDamageMultiplier: 1
+    enableBossWeakPointSpawn: 0
+  _inputEffects:
+    enableHoldToMove: 0
+    holdMoveRepeatIntervalScale: 1
+    enableInputAdjust: 0
+  _visualEffects:
+    usePlayerTint: 1
+    playerTintColor: {r: 0.2, g: 0.85, b: 0.3, a: 1}
