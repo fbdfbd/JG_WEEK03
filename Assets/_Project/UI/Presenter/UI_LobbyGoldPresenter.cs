@@ -7,26 +7,32 @@ public sealed class UI_LobbyGoldPresenter : MonoBehaviour
     [SerializeField] private UI_LobbyGoldView _goldView;
     [SerializeField] private PlayerProfileService _playerProfileService;
 
+    private bool _hasRequiredReferences;
+
     private void Awake()
     {
-        ResolveReferences();
+        ResolvePlayerProfileService();
+        _hasRequiredReferences = ValidateReferences();
     }
 
     private void OnEnable()
     {
-        ResolveReferences();
-
-        if (_playerProfileService != null)
+        if (!_hasRequiredReferences)
         {
-            _playerProfileService.GoldChanged += HandleGoldChanged;
+            return;
         }
+
+        _playerProfileService.GoldChanged += HandleGoldChanged;
 
         RefreshGold();
     }
 
     private void Start()
     {
-        RefreshGold();
+        if (_hasRequiredReferences)
+        {
+            RefreshGold();
+        }
     }
 
     private void OnDisable()
@@ -37,16 +43,31 @@ public sealed class UI_LobbyGoldPresenter : MonoBehaviour
         }
     }
 
-    private void ResolveReferences()
+    private void ResolvePlayerProfileService()
     {
-        _goldView ??= FindFirstObjectByType<UI_LobbyGoldView>(FindObjectsInactive.Include);
-
         if (GameManager.I != null && GameManager.I.PlayerProfileService != null)
         {
             _playerProfileService = GameManager.I.PlayerProfileService;
         }
+    }
 
-        _playerProfileService ??= FindFirstObjectByType<PlayerProfileService>(FindObjectsInactive.Include);
+    private bool ValidateReferences()
+    {
+        bool isValid = true;
+
+        if (_goldView == null)
+        {
+            Debug.LogError($"{nameof(UI_LobbyGoldPresenter)} requires a {nameof(UI_LobbyGoldView)} reference.", this);
+            isValid = false;
+        }
+
+        if (_playerProfileService == null)
+        {
+            Debug.LogError($"{nameof(UI_LobbyGoldPresenter)} requires a {nameof(PlayerProfileService)} reference.", this);
+            isValid = false;
+        }
+
+        return isValid;
     }
 
     private void HandleGoldChanged()

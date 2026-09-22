@@ -17,17 +17,26 @@ public sealed class UI_LobbyInventoryPresenter : MonoBehaviour
     private readonly List<EquippedInventoryItemViewModel> _equippedEntries = new List<EquippedInventoryItemViewModel>();
 
     private string _selectedItemId;
+    private bool _hasRequiredReferences;
 
     private void Awake()
     {
-        ResolveReferences();
-        _inventoryView?.Bind();
+        ResolvePlayerProfileService();
+        _hasRequiredReferences = ValidateReferences();
+
+        if (_hasRequiredReferences)
+        {
+            _inventoryView.Bind();
+        }
     }
 
     private void OnEnable()
     {
-        ResolveReferences();
-        _inventoryView?.Bind();
+        if (!_hasRequiredReferences)
+        {
+            return;
+        }
+
         SubscribeToView();
         SubscribeToData();
         RefreshView();
@@ -35,7 +44,10 @@ public sealed class UI_LobbyInventoryPresenter : MonoBehaviour
 
     private void Start()
     {
-        RefreshView();
+        if (_hasRequiredReferences)
+        {
+            RefreshView();
+        }
     }
 
     private void OnDisable()
@@ -44,18 +56,43 @@ public sealed class UI_LobbyInventoryPresenter : MonoBehaviour
         UnsubscribeFromView();
     }
 
-    private void ResolveReferences()
+    private void ResolvePlayerProfileService()
     {
-        _inventoryView ??= FindFirstObjectByType<UI_InventoryView>(FindObjectsInactive.Include);
-        _consumableUseService ??= FindFirstObjectByType<LobbyConsumableUseService>(FindObjectsInactive.Include);
-        _targetingCoordinator ??= FindFirstObjectByType<LobbyConsumableTargetingCoordinator>(FindObjectsInactive.Include);
-
         if (GameManager.I != null && GameManager.I.PlayerProfileService != null)
         {
             _playerProfileService = GameManager.I.PlayerProfileService;
         }
+    }
 
-        _playerProfileService ??= FindFirstObjectByType<PlayerProfileService>(FindObjectsInactive.Include);
+    private bool ValidateReferences()
+    {
+        bool isValid = true;
+
+        if (_inventoryView == null)
+        {
+            Debug.LogError($"{nameof(UI_LobbyInventoryPresenter)} requires an {nameof(UI_InventoryView)} reference.", this);
+            isValid = false;
+        }
+
+        if (_playerProfileService == null)
+        {
+            Debug.LogError($"{nameof(UI_LobbyInventoryPresenter)} requires a {nameof(PlayerProfileService)} reference.", this);
+            isValid = false;
+        }
+
+        if (_consumableUseService == null)
+        {
+            Debug.LogError($"{nameof(UI_LobbyInventoryPresenter)} requires a {nameof(LobbyConsumableUseService)} reference.", this);
+            isValid = false;
+        }
+
+        if (_targetingCoordinator == null)
+        {
+            Debug.LogError($"{nameof(UI_LobbyInventoryPresenter)} requires a {nameof(LobbyConsumableTargetingCoordinator)} reference.", this);
+            isValid = false;
+        }
+
+        return isValid;
     }
 
     private void SubscribeToView()

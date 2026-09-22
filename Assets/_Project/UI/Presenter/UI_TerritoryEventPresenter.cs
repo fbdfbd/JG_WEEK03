@@ -9,6 +9,7 @@ public sealed class UI_TerritoryEventPresenter : MonoBehaviour
     [SerializeField] private SOTerritoryEventCatalog eventCatalog;
 
     private readonly TerritoryEventActionService _eventActionService = new TerritoryEventActionService();
+    private bool _hasRequiredReferences;
 
     public TerritoryEventSelectionSession CurrentSession { get; private set; }
     public bool IsShowing => eventView != null && eventView.IsVisible;
@@ -18,25 +19,23 @@ public sealed class UI_TerritoryEventPresenter : MonoBehaviour
 
     private void Awake()
     {
-        ResolveReferences();
-        eventView?.Bind();
-        eventView?.Hide();
-    }
+        _hasRequiredReferences = ValidateReferences();
+        if (!_hasRequiredReferences)
+        {
+            return;
+        }
 
-    private void Reset()
-    {
-        ResolveReferences();
-    }
-
-    private void OnValidate()
-    {
-        ResolveReferences();
+        eventView.Bind();
+        eventView.Hide();
     }
 
     private void OnEnable()
     {
-        ResolveReferences();
-        eventView?.Bind();
+        if (!_hasRequiredReferences)
+        {
+            return;
+        }
+
         SubscribeToView();
     }
 
@@ -69,9 +68,23 @@ public sealed class UI_TerritoryEventPresenter : MonoBehaviour
         eventView?.Hide();
     }
 
-    private void ResolveReferences()
+    private bool ValidateReferences()
     {
-        eventView ??= FindFirstObjectByType<UI_TerritoryEventView>(FindObjectsInactive.Include);
+        bool isValid = true;
+
+        if (eventView == null)
+        {
+            Debug.LogError($"{nameof(UI_TerritoryEventPresenter)} requires a {nameof(UI_TerritoryEventView)} reference.", this);
+            isValid = false;
+        }
+
+        if (eventCatalog == null)
+        {
+            Debug.LogError($"{nameof(UI_TerritoryEventPresenter)} requires a {nameof(SOTerritoryEventCatalog)} reference.", this);
+            isValid = false;
+        }
+
+        return isValid;
     }
 
     private void SubscribeToView()

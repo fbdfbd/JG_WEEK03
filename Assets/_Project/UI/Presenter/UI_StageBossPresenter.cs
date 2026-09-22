@@ -11,14 +11,20 @@ public sealed class UI_StageBossPresenter : MonoBehaviour
     [SerializeField] private string _bossNameOverride;
     [SerializeField] private bool _hideViewWhenTargetIsMissing = true;
 
+    private bool _hasRequiredReferences;
+
     private void Awake()
     {
-        ResolveReferences();
+        _hasRequiredReferences = ValidateReferences();
     }
 
     private void OnEnable()
     {
-        ResolveReferences();
+        if (!_hasRequiredReferences)
+        {
+            return;
+        }
+
         SubscribeToStatus();
         RefreshView();
     }
@@ -41,14 +47,15 @@ public sealed class UI_StageBossPresenter : MonoBehaviour
         UnsubscribeFromStatus();
     }
 
-    private void ResolveReferences()
+    private bool ValidateReferences()
     {
-        _stageBossStatusView ??= FindFirstObjectByType<UI_StageBossStatusView>(FindObjectsInactive.Include);
-
-        if (_boss == null)
+        if (_stageBossStatusView != null)
         {
-            _boss = FindFirstObjectByType<BossBase>(FindObjectsInactive.Include);
+            return true;
         }
+
+        Debug.LogError($"{nameof(UI_StageBossPresenter)} requires a {nameof(UI_StageBossStatusView)} reference.", this);
+        return false;
     }
 
     private void SubscribeToStatus()
@@ -74,11 +81,6 @@ public sealed class UI_StageBossPresenter : MonoBehaviour
 
     private void RefreshView()
     {
-        if (_stageBossStatusView == null || _boss == null)
-        {
-            ResolveReferences();
-        }
-
         if (_stageBossStatusView == null)
         {
             return;

@@ -69,17 +69,26 @@ public sealed class UI_LobbyShopPresenter : MonoBehaviour
 
     private readonly List<ShopItemViewModel> _shopItems = new List<ShopItemViewModel>();
     private string _selectedItemId;
+    private bool _hasRequiredReferences;
 
     private void Awake()
     {
-        ResolveReferences();
-        _shopView?.Bind();
+        ResolveDependencies();
+        _hasRequiredReferences = ValidateReferences();
+
+        if (_hasRequiredReferences)
+        {
+            _shopView.Bind();
+        }
     }
 
     private void OnEnable()
     {
-        ResolveReferences();
-        _shopView?.Bind();
+        if (!_hasRequiredReferences)
+        {
+            return;
+        }
+
         SubscribeToView();
         SubscribeToData();
         RefreshView();
@@ -87,7 +96,10 @@ public sealed class UI_LobbyShopPresenter : MonoBehaviour
 
     private void Start()
     {
-        RefreshView();
+        if (_hasRequiredReferences)
+        {
+            RefreshView();
+        }
     }
 
     private void OnDisable()
@@ -96,16 +108,12 @@ public sealed class UI_LobbyShopPresenter : MonoBehaviour
         UnsubscribeFromView();
     }
 
-    private void ResolveReferences()
+    private void ResolveDependencies()
     {
-        _shopView ??= FindFirstObjectByType<UI_ShopView>(FindObjectsInactive.Include);
-
         if (GameManager.I != null && GameManager.I.PlayerProfileService != null)
         {
             _playerProfileService = GameManager.I.PlayerProfileService;
         }
-
-        _playerProfileService ??= FindFirstObjectByType<PlayerProfileService>(FindObjectsInactive.Include);
 
         if (_equipmentCatalog == null && _playerProfileService != null)
         {
@@ -136,6 +144,37 @@ public sealed class UI_LobbyShopPresenter : MonoBehaviour
         {
             _consumableCatalog = _playerProfileService.ConsumableCatalog;
         }
+    }
+
+    private bool ValidateReferences()
+    {
+        bool isValid = true;
+
+        if (_shopView == null)
+        {
+            Debug.LogError($"{nameof(UI_LobbyShopPresenter)} requires a {nameof(UI_ShopView)} reference.", this);
+            isValid = false;
+        }
+
+        if (_playerProfileService == null)
+        {
+            Debug.LogError($"{nameof(UI_LobbyShopPresenter)} requires a {nameof(PlayerProfileService)} reference.", this);
+            isValid = false;
+        }
+
+        if (_equipmentCatalog == null)
+        {
+            Debug.LogError($"{nameof(UI_LobbyShopPresenter)} requires an {nameof(SOEquipmentCatalog)} reference.", this);
+            isValid = false;
+        }
+
+        if (_consumableCatalog == null)
+        {
+            Debug.LogError($"{nameof(UI_LobbyShopPresenter)} requires a {nameof(SOConsumableCatalog)} reference.", this);
+            isValid = false;
+        }
+
+        return isValid;
     }
 
     private void SubscribeToView()

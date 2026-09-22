@@ -10,14 +10,20 @@ public sealed class UI_StagePlayerPresenter : MonoBehaviour
     [Header("Options")]
     [SerializeField] private bool _hideViewWhenTargetIsMissing = true;
 
+    private bool _hasRequiredReferences;
+
     private void Awake()
     {
-        ResolveReferences();
+        _hasRequiredReferences = ValidateReferences();
     }
 
     private void OnEnable()
     {
-        ResolveReferences();
+        if (!_hasRequiredReferences)
+        {
+            return;
+        }
+
         SubscribeToStatus();
         RefreshView();
     }
@@ -40,14 +46,15 @@ public sealed class UI_StagePlayerPresenter : MonoBehaviour
         UnsubscribeFromStatus();
     }
 
-    private void ResolveReferences()
+    private bool ValidateReferences()
     {
-        _stagePlayerStatusView ??= FindFirstObjectByType<UI_StagePlayerStatusView>(FindObjectsInactive.Include);
-
-        if (_playerStatus == null)
+        if (_stagePlayerStatusView != null)
         {
-            _playerStatus = FindFirstObjectByType<PlayerStatus>(FindObjectsInactive.Include);
+            return true;
         }
+
+        Debug.LogError($"{nameof(UI_StagePlayerPresenter)} requires a {nameof(UI_StagePlayerStatusView)} reference.", this);
+        return false;
     }
 
     private void SubscribeToStatus()
@@ -73,11 +80,6 @@ public sealed class UI_StagePlayerPresenter : MonoBehaviour
 
     private void RefreshView()
     {
-        if (_stagePlayerStatusView == null || _playerStatus == null)
-        {
-            ResolveReferences();
-        }
-
         if (_stagePlayerStatusView == null)
         {
             return;

@@ -11,14 +11,20 @@ public sealed class UI_StageComboPresenter : MonoBehaviour
     [SerializeField] private int visibleComboThreshold = 1;
     [SerializeField] private bool hideViewWhenTargetIsMissing = true;
 
+    private bool hasRequiredReferences;
+
     private void Awake()
     {
-        ResolveReferences();
+        hasRequiredReferences = ValidateReferences();
     }
 
     private void OnEnable()
     {
-        ResolveReferences();
+        if (!hasRequiredReferences)
+        {
+            return;
+        }
+
         SubscribeToCombo();
         RefreshView();
     }
@@ -41,10 +47,15 @@ public sealed class UI_StageComboPresenter : MonoBehaviour
         RefreshView();
     }
 
-    private void ResolveReferences()
+    private bool ValidateReferences()
     {
-        comboView ??= FindFirstObjectByType<UI_StageComboView>(FindObjectsInactive.Include);
-        comboTracker ??= FindFirstObjectByType<PlayerComboTracker>(FindObjectsInactive.Include);
+        if (comboView != null)
+        {
+            return true;
+        }
+
+        Debug.LogError($"{nameof(UI_StageComboPresenter)} requires a {nameof(UI_StageComboView)} reference.", this);
+        return false;
     }
 
     private void SubscribeToCombo()
@@ -70,11 +81,6 @@ public sealed class UI_StageComboPresenter : MonoBehaviour
 
     private void RefreshView()
     {
-        if (comboView == null || comboTracker == null)
-        {
-            ResolveReferences();
-        }
-
         if (comboView == null)
         {
             return;
@@ -102,11 +108,6 @@ public sealed class UI_StageComboPresenter : MonoBehaviour
 
     private void HandleComboChanged(int comboCount)
     {
-        if (comboView == null)
-        {
-            ResolveReferences();
-        }
-
         if (comboView == null)
         {
             return;
