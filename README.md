@@ -1,5 +1,7 @@
 # FACE-OFF
 
+🎮 [게임 플레이하기 (itch.io)](https://fbdfbd.itch.io/face-off)
+
 ![FACE-OFF 플레이 화면 1](Screenshots/FACE-OFF_20261124_194053_608.png)
 
 ![FACE-OFF 플레이 화면 2](Screenshots/FACE-OFF_20261124_194101_283.png)
