@@ -599,7 +599,7 @@ MonoBehaviour:
   horizontalThreshold: 0.5
   baseHoldStartDelay: 0.22
   baseHoldRepeatInterval: 0.16
-  acrossMoveGaugeCost: 5
+  acrossMoveGaugeCost: 0
   debugForceEnableHoldToMove: 0
   debugForceEnableInputAdjust: 0
   playerController: {fileID: 231992246}
@@ -3057,6 +3057,7 @@ GameObject:
   - component: {fileID: 1925124381}
   - component: {fileID: 1925124380}
   - component: {fileID: 1925124383}
+  - component: {fileID: 1925124384}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3455,3 +3456,21 @@ SceneRoots:
   - {fileID: 690976634}
   - {fileID: 2081398682}
   - {fileID: 1966422085}
+--- !u!114 &1925124384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925124379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 985812bab1a34d77a8e934df452132c2, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CombatCameraShake
+  hitStrength: 0.06
+  hitDuration: 0.08
+  damageStrength: 0.18
+  damageDuration: 0.16
+  frequency: 35
+  useUnscaledTime: 1

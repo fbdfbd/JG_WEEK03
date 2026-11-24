@@ -13,11 +13,13 @@ public sealed class TerritoryDayAdvancePresentationController : MonoBehaviour
     [SerializeField] private TerritoryIncomePopupController incomePopupController;
     [SerializeField] private TerritoryEnemyExpansionFxController enemyExpansionFxController;
 
+    private bool _hasRequiredReferences;
+
     public bool IsPlaying { get; private set; }
 
     private void Awake()
     {
-        ResolveReferences();
+        _hasRequiredReferences = ValidateReferences();
     }
 
     public IEnumerator Play(TerritoryDayAdvanceResult dayAdvanceResult)
@@ -27,7 +29,11 @@ public sealed class TerritoryDayAdvancePresentationController : MonoBehaviour
             yield break;
         }
 
-        ResolveReferences();
+        if (!_hasRequiredReferences)
+        {
+            yield break;
+        }
+
         IsPlaying = true;
         SetInteractionEnabled(false);
 
@@ -65,17 +71,29 @@ public sealed class TerritoryDayAdvancePresentationController : MonoBehaviour
         IsPlaying = false;
     }
 
-    private void ResolveReferences()
+    private bool ValidateReferences()
     {
-        territoryMapController ??= FindFirstObjectByType<TerritoryMapController>(FindObjectsInactive.Include);
-        territoryTurnView ??= FindFirstObjectByType<UI_TerritoryTurnView>(FindObjectsInactive.Include);
-        territoryTurnFxController ??= FindFirstObjectByType<TerritoryTurnFxController>(FindObjectsInactive.Include);
-        panelTransitionController ??= GetComponent<TerritoryPanelTransitionController>();
-        incomePopupController ??= GetComponent<TerritoryIncomePopupController>();
-        enemyExpansionFxController ??= GetComponent<TerritoryEnemyExpansionFxController>();
-        panelTransitionController ??= FindFirstObjectByType<TerritoryPanelTransitionController>(FindObjectsInactive.Include);
-        incomePopupController ??= FindFirstObjectByType<TerritoryIncomePopupController>(FindObjectsInactive.Include);
-        enemyExpansionFxController ??= FindFirstObjectByType<TerritoryEnemyExpansionFxController>(FindObjectsInactive.Include);
+        bool isValid = true;
+
+        isValid &= ValidateReference(territoryMapController, nameof(territoryMapController));
+        isValid &= ValidateReference(territoryTurnView, nameof(territoryTurnView));
+        isValid &= ValidateReference(territoryTurnFxController, nameof(territoryTurnFxController));
+        isValid &= ValidateReference(panelTransitionController, nameof(panelTransitionController));
+        isValid &= ValidateReference(incomePopupController, nameof(incomePopupController));
+        isValid &= ValidateReference(enemyExpansionFxController, nameof(enemyExpansionFxController));
+
+        return isValid;
+    }
+
+    private bool ValidateReference(UnityEngine.Object reference, string fieldName)
+    {
+        if (reference != null)
+        {
+            return true;
+        }
+
+        Debug.LogError($"{nameof(TerritoryDayAdvancePresentationController)} requires '{fieldName}' to be assigned.", this);
+        return false;
     }
 
     private void SetInteractionEnabled(bool isEnabled)

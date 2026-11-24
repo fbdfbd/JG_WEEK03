@@ -1,24 +1,24 @@
 public static class LobbyUiText
 {
-    public const string ProfileRequired = "프로필 필요";
-    public const string Owned = "보유";
-    public const string Equipped = "장착 중";
-    public const string CanBuy = "구매 가능";
-    public const string NeedMoreGold = "골드 부족";
-    public const string Buy = "구매";
-    public const string Use = "사용";
-    public const string Equip = "장착";
-    public const string SelectEquipment = "장비 선택";
-    public const string SelectItem = "아이템 선택";
-    public const string NeedMoreCost = "코스트 부족";
-    public const string SelectTile = "타일 선택";
-    public const string CancelTargeting = "선택 취소";
-    public const string StaminaFull = "스태미나 가득 참";
-    public const string NoItem = "아이템 없음";
+    public static string ProfileRequired => GameLanguage.Text("프로필 필요");
+    public static string Owned => GameLanguage.Text("보유");
+    public static string Equipped => GameLanguage.Text("장착 중");
+    public static string CanBuy => GameLanguage.Text("구매 가능");
+    public static string NeedMoreGold => GameLanguage.Text("골드 부족");
+    public static string Buy => GameLanguage.Text("구매");
+    public static string Use => GameLanguage.Text("사용");
+    public static string Equip => GameLanguage.Text("장착");
+    public static string SelectEquipment => GameLanguage.Text("장비 선택");
+    public static string SelectItem => GameLanguage.Text("아이템 선택");
+    public static string NeedMoreCost => GameLanguage.Text("코스트 부족");
+    public static string SelectTile => GameLanguage.Text("타일 선택");
+    public static string CancelTargeting => GameLanguage.Text("선택 취소");
+    public static string StaminaFull => GameLanguage.Text("스태미나 가득 참");
+    public static string NoItem => GameLanguage.Text("아이템 없음");
 
     public static string BuyWithGold(int price)
     {
-        return $"구매 {price}G";
+        return GameLanguage.Format("구매 {0}G", price);
     }
 
     public static string Price(int price)
@@ -28,7 +28,7 @@ public static class LobbyUiText
 
     public static string OwnedCount(int count)
     {
-        return $"보유 x{count}";
+        return GameLanguage.Format("보유 x{0}", count);
     }
 
     public static string Count(int count)
@@ -38,7 +38,7 @@ public static class LobbyUiText
 
     public static string Cost(int cost)
     {
-        return $"코스트 {cost}";
+        return GameLanguage.Format("코스트 {0}", cost);
     }
 
     public static string CostProgress(int currentCost, int maxCost)

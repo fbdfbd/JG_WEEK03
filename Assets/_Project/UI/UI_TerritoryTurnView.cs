@@ -46,7 +46,7 @@ public sealed class UI_TerritoryTurnView : MonoBehaviour
 
         if (nextDayButtonText != null)
         {
-            nextDayButtonText.text = "다음 날";
+            nextDayButtonText.text = GameLanguage.Text("다음 날");
         }
 
         _isBound = true;
@@ -82,7 +82,7 @@ public sealed class UI_TerritoryTurnView : MonoBehaviour
     {
         if (dayText != null)
         {
-            dayText.text = $"{day}일차";
+            dayText.text = GameLanguage.Format("{0}일차", day);
         }
     }
 

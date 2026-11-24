@@ -105,15 +105,22 @@ public class PlayerController : ObjectBase, IFaceSectorAttackTarget
 
     public override void TakeDamage(int damage)
     {
-        if (_isDead)
+        if (_isDead || damage <= 0)
         {
             return;
         }
 
+        int healthBeforeDamage = playerStatus.GetCurrentHealth();
         playerStatus.ApplyDamage(damage);
+        if (playerStatus.GetCurrentHealth() >= healthBeforeDamage)
+        {
+            return;
+        }
+
         playerCombatRewardService?.HandlePlayerDamaged();
         SyncHealthSnapshotFromStatus();
         playerVisual.PlayHitFlash();
+        CombatCameraShake.RequestPlayerDamaged();
 
         if (!playerStatus.HasNoHealthRemaining())
         {

@@ -15,9 +15,11 @@ public sealed class TerritoryEnemyExpansionFxController : MonoBehaviour
     [SerializeField] private float pulseDuration = 0.15f;
     [SerializeField] private float eventInterval = 0.1f;
 
+    private bool _hasRequiredReferences;
+
     private void Awake()
     {
-        territoryMapController ??= FindFirstObjectByType<TerritoryMapController>(FindObjectsInactive.Include);
+        _hasRequiredReferences = ValidateReferences();
     }
 
     public IEnumerator Play(IReadOnlyList<TerritoryEnemyExpansionEvent> expansionEvents)
@@ -27,7 +29,10 @@ public sealed class TerritoryEnemyExpansionFxController : MonoBehaviour
             yield break;
         }
 
-        territoryMapController ??= FindFirstObjectByType<TerritoryMapController>(FindObjectsInactive.Include);
+        if (!_hasRequiredReferences)
+        {
+            yield break;
+        }
 
         for (int index = 0; index < expansionEvents.Count; index++)
         {
@@ -36,6 +41,17 @@ public sealed class TerritoryEnemyExpansionFxController : MonoBehaviour
         }
 
         yield return new WaitForSeconds(pulseDuration * 2f);
+    }
+
+    private bool ValidateReferences()
+    {
+        if (territoryMapController != null)
+        {
+            return true;
+        }
+
+        Debug.LogError($"{nameof(TerritoryEnemyExpansionFxController)} requires '{nameof(territoryMapController)}' to be assigned.", this);
+        return false;
     }
 
     private void PlayExpansionEvent(TerritoryEnemyExpansionEvent expansionEvent)

@@ -92,11 +92,11 @@ public sealed class CampaignResultPanelController : MonoBehaviour
         switch (outcomeResult.OutcomeType)
         {
             case CampaignOutcomeType.Victory:
-                return "승리";
+                return GameLanguage.Text("승리");
             case CampaignOutcomeType.Defeat:
-                return "패배";
+                return GameLanguage.Text("패배");
             case CampaignOutcomeType.Draw:
-                return "무승부";
+                return GameLanguage.Text("무승부");
             default:
                 return string.Empty;
         }
@@ -107,9 +107,9 @@ public sealed class CampaignResultPanelController : MonoBehaviour
         switch (outcomeResult.Reason)
         {
             case CampaignOutcomeReason.EnemyStartCaptured:
-                return "적 시작지를 점령했습니다.";
+                return GameLanguage.Text("적 시작지를 점령했습니다.");
             case CampaignOutcomeReason.FinalDayTerritoryCount:
-                return $"10일차 종료\n플레이어 {outcomeResult.PlayerTileCount}칸 / 적 {outcomeResult.EnemyTileCount}칸";
+                return GameLanguage.Format("10일차 종료\n플레이어 {0}칸 / 적 {1}칸", outcomeResult.PlayerTileCount, outcomeResult.EnemyTileCount);
             default:
                 return string.Empty;
         }
@@ -210,7 +210,7 @@ public sealed class CampaignResultPanelController : MonoBehaviour
         closeTextRect.anchorMax = Vector2.one;
         closeTextRect.offsetMin = Vector2.zero;
         closeTextRect.offsetMax = Vector2.zero;
-        closeButtonText.text = "종료";
+        closeButtonText.text = GameLanguage.Text("종료");
 
         resultPanelView = rootObject.GetComponent<UICampaignResultPanelView>();
         resultPanelView.Initialize(rootObject, titleText, summaryText, closeButton);

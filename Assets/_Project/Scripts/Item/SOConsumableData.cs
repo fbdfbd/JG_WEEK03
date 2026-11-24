@@ -20,8 +20,8 @@ public sealed class SOConsumableData : ScriptableObject
     public string ConsumableId => _consumableId;
     public LobbyConsumableType ConsumableType => _consumableType;
     public LobbyConsumableTargetType TargetType => _targetType;
-    public string DisplayName => _displayName;
-    public string Description => _description;
+    public string DisplayName => GameLanguage.ItemText(_consumableId, false, _displayName);
+    public string Description => GameLanguage.ItemText(_consumableId, true, _description);
     public int Price => _price;
     public Sprite Icon => _icon;
 

@@ -34,37 +34,42 @@ public sealed class LobbySceneController : MonoBehaviour
     private readonly CampaignVictoryResolver _campaignVictoryResolver = new CampaignVictoryResolver();
     private readonly FinalDayTerritoryCollector _finalDayTerritoryCollector = new FinalDayTerritoryCollector();
     private bool _isAdvancingDay;
+    private bool _hasRequiredReferences;
 
     public event Action<TerritoryStageRequest> StageEntryRequested;
     public event Action<TerritoryDayAdvanceResult> DayAdvanceCompleted;
 
     private void Awake()
     {
-        territoryMapController ??= FindFirstObjectByType<TerritoryMapController>();
-        territoryTurnService ??= territoryMapController != null ? territoryMapController.TurnService : FindFirstObjectByType<TerritoryTurnService>();
-        territoryInfoPanelBridge ??= territoryMapController != null ? territoryMapController.InfoPanelBridge : FindFirstObjectByType<TerritoryInfoPanelBridge>();
-        territoryInfoView ??= FindFirstObjectByType<UI_TerritoryInfoView>(FindObjectsInactive.Include);
-        territoryTurnView ??= FindFirstObjectByType<UI_TerritoryTurnView>(FindObjectsInactive.Include);
-        territoryTurnFxController ??= FindFirstObjectByType<TerritoryTurnFxController>(FindObjectsInactive.Include);
         territoryDayAdvancePresentationController ??= GetComponent<TerritoryDayAdvancePresentationController>();
         stageRewardPresentationController ??= GetOrAddComponent<StageRewardPresentationController>();
         finalDayTerritoryCountPresentationController ??= GetOrAddComponent<FinalDayTerritoryCountPresentationController>();
         campaignResultPanelController ??= GetOrAddComponent<CampaignResultPanelController>();
         inputBlockerView ??= FindFirstObjectByType<UI_InputBlockerView>(FindObjectsInactive.Include);
-        territoryEventPresenter ??= FindFirstObjectByType<UI_TerritoryEventPresenter>(FindObjectsInactive.Include);
 
         EnsureGlobalServices();
+        _hasRequiredReferences = ValidateReferences();
         territoryMapController?.SetBuildOnStart(false);
     }
 
     private void OnEnable()
     {
+        if (!_hasRequiredReferences)
+        {
+            return;
+        }
+
         SubscribeToViews();
         SubscribeToData();
     }
 
     private void Start()
     {
+        if (!_hasRequiredReferences)
+        {
+            return;
+        }
+
         territoryInfoView?.Bind();
         territoryTurnView?.Bind();
 
@@ -161,7 +166,33 @@ public sealed class LobbySceneController : MonoBehaviour
             }
         }
 
-        playerProfileService ??= FindFirstObjectByType<PlayerProfileService>(FindObjectsInactive.Include);
+    }
+
+    private bool ValidateReferences()
+    {
+        bool isValid = true;
+
+        isValid &= ValidateReference(territoryMapController, nameof(territoryMapController));
+        isValid &= ValidateReference(territoryTurnService, nameof(territoryTurnService));
+        isValid &= ValidateReference(territoryInfoPanelBridge, nameof(territoryInfoPanelBridge));
+        isValid &= ValidateReference(territoryInfoView, nameof(territoryInfoView));
+        isValid &= ValidateReference(territoryTurnView, nameof(territoryTurnView));
+        isValid &= ValidateReference(territoryTurnFxController, nameof(territoryTurnFxController));
+        isValid &= ValidateReference(territoryEventPresenter, nameof(territoryEventPresenter));
+        isValid &= ValidateReference(playerProfileService, nameof(playerProfileService));
+
+        return isValid;
+    }
+
+    private bool ValidateReference(UnityEngine.Object reference, string fieldName)
+    {
+        if (reference != null)
+        {
+            return true;
+        }
+
+        Debug.LogError($"{nameof(LobbySceneController)} requires '{fieldName}' to be assigned.", this);
+        return false;
     }
 
     // 로비 진입 시 기존 런이 있으면 복원하고, 없으면 새 런을 시작한다.

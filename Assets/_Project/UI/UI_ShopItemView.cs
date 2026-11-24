@@ -37,16 +37,19 @@ public sealed class UI_ShopItemView : MonoBehaviour
         if (_itemNameText != null)
         {
             _itemNameText.text = item.DisplayName;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(_itemNameText);
         }
 
         if (_priceText != null)
         {
             _priceText.text = item.PriceText;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(_priceText);
         }
 
         if (_stateText != null)
         {
             _stateText.text = item.StatusText;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(_stateText);
         }
 
         if (_itemImage != null)

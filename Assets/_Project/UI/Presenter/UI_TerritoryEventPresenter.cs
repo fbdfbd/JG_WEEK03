@@ -114,13 +114,13 @@ public sealed class UI_TerritoryEventPresenter : MonoBehaviour
     private TerritoryEventDialogViewModel BuildViewModel(TerritoryEventSelectionSession session)
     {
         return new TerritoryEventDialogViewModel(
-            session.EventDefinition.Title,
-            session.EventDefinition.SituationText,
-            BuildOptionViewModel(session.EventDefinition.FirstOption),
-            BuildOptionViewModel(session.EventDefinition.SecondOption));
+            GameLanguage.EventText(session.EventDefinition.EventId, 0, session.EventDefinition.Title),
+            GameLanguage.EventText(session.EventDefinition.EventId, 1, session.EventDefinition.SituationText),
+            BuildOptionViewModel(session.EventDefinition.FirstOption, session.EventDefinition.EventId, 2),
+            BuildOptionViewModel(session.EventDefinition.SecondOption, session.EventDefinition.EventId, 4));
     }
 
-    private TerritoryEventOptionViewModel BuildOptionViewModel(TerritoryEventOptionDefinition option)
+    private TerritoryEventOptionViewModel BuildOptionViewModel(TerritoryEventOptionDefinition option, string eventId, int field)
     {
         if (option == null)
         {
@@ -128,8 +128,8 @@ public sealed class UI_TerritoryEventPresenter : MonoBehaviour
         }
 
         return new TerritoryEventOptionViewModel(
-            option.Label,
-            option.Description,
+            GameLanguage.EventText(eventId, field, option.Label),
+            GameLanguage.EventText(eventId, field + 1, option.Description),
             !string.IsNullOrWhiteSpace(option.Label));
     }
 

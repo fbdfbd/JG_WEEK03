@@ -241,7 +241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BossSkill_RandomSafeOppositeWeakStrike
   logicId: BossSkill_RandomSafeOppositeWeakStrike
   weakSectorHalfWidth: 0
-  weakSectorLeadDuration: 0.3
+  weakSectorLeadDuration: 0.1
   damage: 2
   attackActiveDuration: 1.1
   hideTelegraphAfterAttack: 1

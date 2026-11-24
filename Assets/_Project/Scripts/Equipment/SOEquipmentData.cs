@@ -11,6 +11,7 @@ public struct EquipmentStatModifiers
     [SerializeField] private float basicAttackDelayScale;
     [SerializeField] private float specialGaugeCostScale;
     [SerializeField] private int successfulHitCountForRecovery;
+    [Min(0)][SerializeField] private int successfulHitCountToActivateRecovery;
     [SerializeField] private int recoveryHealthOnTrigger;
     [SerializeField] private float recoverySpecialGaugeOnTrigger;
 
@@ -22,6 +23,7 @@ public struct EquipmentStatModifiers
     public float BasicAttackDelayScale => basicAttackDelayScale;
     public float SpecialGaugeCostScale => specialGaugeCostScale;
     public int SuccessfulHitCountForRecovery => successfulHitCountForRecovery;
+    public int SuccessfulHitCountToActivateRecovery => successfulHitCountToActivateRecovery;
     public int RecoveryHealthOnTrigger => recoveryHealthOnTrigger;
     public float RecoverySpecialGaugeOnTrigger => recoverySpecialGaugeOnTrigger;
 
@@ -35,7 +37,8 @@ public struct EquipmentStatModifiers
         float specialGaugeCostScale,
         int successfulHitCountForRecovery,
         int recoveryHealthOnTrigger,
-        float recoverySpecialGaugeOnTrigger)
+        float recoverySpecialGaugeOnTrigger,
+        int successfulHitCountToActivateRecovery = 0)
     {
         this.maxHealthBonus = maxHealthBonus;
         this.maxSpecialGaugeBonus = maxSpecialGaugeBonus;
@@ -45,6 +48,7 @@ public struct EquipmentStatModifiers
         this.basicAttackDelayScale = basicAttackDelayScale;
         this.specialGaugeCostScale = specialGaugeCostScale;
         this.successfulHitCountForRecovery = successfulHitCountForRecovery;
+        this.successfulHitCountToActivateRecovery = successfulHitCountToActivateRecovery;
         this.recoveryHealthOnTrigger = recoveryHealthOnTrigger;
         this.recoverySpecialGaugeOnTrigger = recoverySpecialGaugeOnTrigger;
     }
@@ -140,8 +144,8 @@ public sealed class SOEquipmentData : ScriptableObject
 
     public string EquipmentId => _equipmentId;
     public EquipmentType EquipmentType => _equipmentType;
-    public string DisplayName => _displayName;
-    public string Description => _description;
+    public string DisplayName => GameLanguage.ItemText(_equipmentId, false, _displayName);
+    public string Description => GameLanguage.ItemText(_equipmentId, true, _description);
     public int Cost => _cost;
     public int Price => _price;
     public string SpriteAssetPath => _spriteAssetPath;

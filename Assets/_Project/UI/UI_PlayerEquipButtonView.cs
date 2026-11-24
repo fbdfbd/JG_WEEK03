@@ -39,6 +39,7 @@ public sealed class UI_PlayerEquipButtonView : MonoBehaviour
         if (_itemNameText != null)
         {
             _itemNameText.text = itemViewModel.DisplayName;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(_itemNameText);
         }
 
         if (_equipSelectButton != null)

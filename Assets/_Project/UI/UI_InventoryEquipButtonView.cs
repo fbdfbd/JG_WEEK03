@@ -22,6 +22,7 @@ public sealed class UI_InventoryEquipButtonView : MonoBehaviour
         if (_itemNameText != null)
         {
             _itemNameText.text = itemViewModel.DisplayName;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(_itemNameText);
         }
 
         if (_itemImage != null)

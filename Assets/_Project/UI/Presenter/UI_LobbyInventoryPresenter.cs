@@ -420,7 +420,7 @@ public sealed class UI_LobbyInventoryPresenter : MonoBehaviour
                 return LobbyUiText.NeedMoreCost;
 
             case EquipmentEquipResult.ExclusiveTypeAlreadyEquipped:
-                return "색깔 장비는 1개만 장착 가능";
+                return GameLanguage.Text("색깔 장비는 1개만 장착 가능");
 
             default:
                 return LobbyUiText.Equip;

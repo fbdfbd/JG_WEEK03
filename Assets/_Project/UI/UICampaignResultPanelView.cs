@@ -49,11 +49,13 @@ public sealed class UICampaignResultPanelView : MonoBehaviour
         if (titleText != null)
         {
             titleText.text = title ?? string.Empty;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(titleText);
         }
 
         if (summaryText != null)
         {
             summaryText.text = summary ?? string.Empty;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(summaryText);
         }
 
         rootObject.SetActive(true);

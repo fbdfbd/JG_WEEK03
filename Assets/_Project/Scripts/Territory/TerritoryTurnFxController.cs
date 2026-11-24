@@ -17,7 +17,10 @@ public sealed class TerritoryTurnFxController : MonoBehaviour
 
     private void Awake()
     {
-        territoryMapController ??= FindFirstObjectByType<TerritoryMapController>();
+        if (territoryMapController == null)
+        {
+            Debug.LogError($"{nameof(TerritoryTurnFxController)} requires '{nameof(territoryMapController)}' to be assigned.", this);
+        }
     }
 
     // 다음 날 전환 결과를 받아, 바뀐 타일들을 순서대로 강조한다.

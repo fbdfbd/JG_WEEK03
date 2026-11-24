@@ -17,16 +17,24 @@ public sealed class TerritoryPanelTransitionController : MonoBehaviour
     private Vector2 _topShownPosition;
     private Vector2 _bottomShownPosition;
     private bool _isInitialized;
+    private bool _hasRequiredReferences;
 
     private void Awake()
     {
-        ResolveReferences();
-        CacheShownPositions();
+        _hasRequiredReferences = ValidateReferences();
+        if (_hasRequiredReferences)
+        {
+            CacheShownPositions();
+        }
     }
 
     public Tween PlayHide()
     {
-        ResolveReferences();
+        if (!_hasRequiredReferences)
+        {
+            return null;
+        }
+
         CacheShownPositions();
 
         if (topPanelView == null || bottomPanelView == null)
@@ -45,7 +53,11 @@ public sealed class TerritoryPanelTransitionController : MonoBehaviour
 
     public Tween PlayShow()
     {
-        ResolveReferences();
+        if (!_hasRequiredReferences)
+        {
+            return null;
+        }
+
         CacheShownPositions();
 
         if (topPanelView == null || bottomPanelView == null)
@@ -59,10 +71,23 @@ public sealed class TerritoryPanelTransitionController : MonoBehaviour
             .SetTarget(gameObject);
     }
 
-    private void ResolveReferences()
+    private bool ValidateReferences()
     {
-        topPanelView ??= FindFirstObjectByType<UI_LobbyTopPanelView>(FindObjectsInactive.Include);
-        bottomPanelView ??= FindFirstObjectByType<UI_LobbyBottomPanelView>(FindObjectsInactive.Include);
+        bool isValid = true;
+
+        if (topPanelView == null)
+        {
+            Debug.LogError($"{nameof(TerritoryPanelTransitionController)} requires '{nameof(topPanelView)}' to be assigned.", this);
+            isValid = false;
+        }
+
+        if (bottomPanelView == null)
+        {
+            Debug.LogError($"{nameof(TerritoryPanelTransitionController)} requires '{nameof(bottomPanelView)}' to be assigned.", this);
+            isValid = false;
+        }
+
+        return isValid;
     }
 
     private void CacheShownPositions()
@@ -72,7 +97,6 @@ public sealed class TerritoryPanelTransitionController : MonoBehaviour
             return;
         }
 
-        ResolveReferences();
         if (topPanelView == null || bottomPanelView == null)
         {
             return;

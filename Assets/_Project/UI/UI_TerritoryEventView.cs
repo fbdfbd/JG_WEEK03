@@ -81,31 +81,37 @@ public sealed class UI_TerritoryEventView : MonoBehaviour
         if (titleText != null)
         {
             titleText.text = viewModel.Title;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(titleText);
         }
 
         if (situationText != null)
         {
             situationText.text = viewModel.SituationText;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(situationText);
         }
 
         if (firstOptionTitleText != null)
         {
             firstOptionTitleText.text = viewModel.FirstOption.Title;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(firstOptionTitleText);
         }
 
         if (firstOptionDescriptionText != null)
         {
             firstOptionDescriptionText.text = viewModel.FirstOption.Description;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(firstOptionDescriptionText);
         }
 
         if (secondOptionTitleText != null)
         {
             secondOptionTitleText.text = viewModel.SecondOption.Title;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(secondOptionTitleText);
         }
 
         if (secondOptionDescriptionText != null)
         {
             secondOptionDescriptionText.text = viewModel.SecondOption.Description;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(secondOptionDescriptionText);
         }
 
         if (firstOptionButton != null)

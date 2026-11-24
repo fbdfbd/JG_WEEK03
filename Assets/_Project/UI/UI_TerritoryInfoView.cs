@@ -67,26 +67,31 @@ public sealed class UI_TerritoryInfoView : MonoBehaviour
         if (tileNameText != null)
         {
             tileNameText.text = viewModel.Title;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(tileNameText);
         }
 
         if (tileOwnerText != null)
         {
             tileOwnerText.text = viewModel.OwnerText;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(tileOwnerText);
         }
 
         if (tileStateText != null)
         {
             tileStateText.text = $"{viewModel.ContentText} / {viewModel.StatusText}";
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(tileStateText);
         }
 
         if (tileHintText != null)
         {
             tileHintText.text = viewModel.HintText;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(tileHintText);
         }
 
         if (enterStageButtonText != null)
         {
             enterStageButtonText.text = viewModel.PrimaryActionLabel;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(enterStageButtonText);
         }
 
         if (enterStageButton != null)

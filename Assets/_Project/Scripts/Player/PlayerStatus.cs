@@ -57,6 +57,8 @@ public sealed class PlayerStatus : MonoBehaviour
 
     [Header("Runtime Recovery Rule")]
     [SerializeField] private int successfulHitCountForRecovery;
+    [SerializeField] private int successfulHitCountToActivateRecovery;
+    [SerializeField] private bool isRecoveryActivated;
     [SerializeField] private int recoveryHealthOnTrigger;
     [SerializeField] private float recoverySpecialGaugeOnTrigger;
 
@@ -72,7 +74,7 @@ public sealed class PlayerStatus : MonoBehaviour
         ApplyStatLoadoutInternal(statLoadout);
         currentHealth = GetMaxHealth();
         currentSpecialGauge = GetMaxSpecialGauge();
-        currentSuccessfulHitCount = 0;
+        ResetSuccessfulHitCounter();
         NotifyStatusChanged();
     }
 
@@ -80,7 +82,7 @@ public sealed class PlayerStatus : MonoBehaviour
     {
         currentHealth = GetMaxHealth();
         currentSpecialGauge = GetMaxSpecialGauge();
-        currentSuccessfulHitCount = 0;
+        ResetSuccessfulHitCounter();
         NotifyStatusChanged();
     }
 
@@ -303,6 +305,18 @@ public sealed class PlayerStatus : MonoBehaviour
 
         currentSuccessfulHitCount++;
 
+        if (!isRecoveryActivated && successfulHitCountToActivateRecovery > 0)
+        {
+            if (currentSuccessfulHitCount >= successfulHitCountToActivateRecovery)
+            {
+                isRecoveryActivated = true;
+                currentSuccessfulHitCount = 0;
+            }
+
+            // The activation hit does not also count toward the first recovery.
+            return RecoveryTriggerResult.None;
+        }
+
         if (currentSuccessfulHitCount < successfulHitCountForRecovery)
         {
             return RecoveryTriggerResult.None;
@@ -335,6 +349,7 @@ public sealed class PlayerStatus : MonoBehaviour
     public void ResetSuccessfulHitCounter()
     {
         currentSuccessfulHitCount = 0;
+        isRecoveryActivated = false;
     }
 
     private void ClampRuntimeValues()
@@ -359,6 +374,8 @@ public sealed class PlayerStatus : MonoBehaviour
             ? statLoadout.RecoveryHealthOnTrigger
             : baseRecoveryHealthOnTrigger;
         recoverySpecialGaugeOnTrigger = Mathf.Max(0f, statLoadout.RecoverySpecialGaugeOnTrigger);
+        successfulHitCountToActivateRecovery = Mathf.Max(0, statLoadout.SuccessfulHitCountToActivateRecovery);
+        ResetSuccessfulHitCounter();
     }
 
     private float SanitizeScale(float scale)

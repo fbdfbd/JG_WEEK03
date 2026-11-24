@@ -94,11 +94,13 @@ public sealed class UI_ShopView : MonoBehaviour
         if (_selectItemNameText != null)
         {
             _selectItemNameText.text = item.DisplayName;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(_selectItemNameText);
         }
 
         if (_selectItemPriceText != null)
         {
             _selectItemPriceText.text = item.PriceText;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(_selectItemPriceText);
         }
 
         if (_selectItemCostText != null)
@@ -111,11 +113,13 @@ public sealed class UI_ShopView : MonoBehaviour
         if (_selectItemStatusText != null)
         {
             _selectItemStatusText.text = item.StatusText;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(_selectItemStatusText);
         }
 
         if (_selectItemDescriptionText != null)
         {
             _selectItemDescriptionText.text = item.Description;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(_selectItemDescriptionText);
         }
 
         SetBuyButtonState(item.CanBuy, item.BuyButtonText);
@@ -167,6 +171,7 @@ public sealed class UI_ShopView : MonoBehaviour
         if (_buyButtonText != null)
         {
             _buyButtonText.text = string.IsNullOrWhiteSpace(buttonText) ? LobbyUiText.Buy : buttonText;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(_buyButtonText);
         }
     }
 

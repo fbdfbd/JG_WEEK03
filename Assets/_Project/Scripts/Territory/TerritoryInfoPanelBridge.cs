@@ -32,7 +32,7 @@ public sealed class TerritoryInfoPanelBridge : MonoBehaviour
             tileId,
             0,
             0,
-            $"타일 {tileId}",
+            GameLanguage.Format("타일 {0}", tileId),
             string.Empty,
             string.Empty,
             string.Empty,

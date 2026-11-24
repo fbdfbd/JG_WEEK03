@@ -20,9 +20,12 @@ public sealed class TerritoryIncomePopupController : MonoBehaviour
     [SerializeField] private Vector3 worldOffset = new Vector3(0f, 0.45f, 0f);
     [SerializeField] private Color popupColor = new Color(1f, 0.83f, 0.2f, 1f);
 
+    private bool _hasRequiredReferences;
+
     private void Awake()
     {
         ResolveReferences();
+        _hasRequiredReferences = ValidateReferences();
     }
 
     public IEnumerator Play(TerritoryDailyIncomeResult incomeResult)
@@ -33,6 +36,11 @@ public sealed class TerritoryIncomePopupController : MonoBehaviour
         }
 
         ResolveReferences();
+        if (!_hasRequiredReferences)
+        {
+            yield break;
+        }
+
         List<TerritoryPopupEntry> popupEntries = new List<TerritoryPopupEntry>(incomeResult.Entries.Count);
         for (int index = 0; index < incomeResult.Entries.Count; index++)
         {
@@ -49,6 +57,11 @@ public sealed class TerritoryIncomePopupController : MonoBehaviour
     public void ShowPopup(TerritoryPopupEntry popupEntry)
     {
         ResolveReferences();
+        if (!_hasRequiredReferences)
+        {
+            return;
+        }
+
         SpawnPopup(popupEntry);
     }
 
@@ -66,6 +79,10 @@ public sealed class TerritoryIncomePopupController : MonoBehaviour
         }
 
         ResolveReferences();
+        if (!_hasRequiredReferences)
+        {
+            yield break;
+        }
 
         for (int index = 0; index < popupEntries.Count; index++)
         {
@@ -78,9 +95,33 @@ public sealed class TerritoryIncomePopupController : MonoBehaviour
 
     private void ResolveReferences()
     {
-        territoryMapController ??= FindFirstObjectByType<TerritoryMapController>(FindObjectsInactive.Include);
         popupCanvas ??= FindPopupCanvas();
         worldCamera ??= Camera.main;
+    }
+
+    private bool ValidateReferences()
+    {
+        bool isValid = true;
+
+        if (territoryMapController == null)
+        {
+            Debug.LogError($"{nameof(TerritoryIncomePopupController)} requires '{nameof(territoryMapController)}' to be assigned.", this);
+            isValid = false;
+        }
+
+        if (popupCanvas == null)
+        {
+            Debug.LogError($"{nameof(TerritoryIncomePopupController)} requires '{nameof(popupCanvas)}' to be assigned.", this);
+            isValid = false;
+        }
+
+        if (worldCamera == null)
+        {
+            Debug.LogError($"{nameof(TerritoryIncomePopupController)} requires '{nameof(worldCamera)}' to be assigned.", this);
+            isValid = false;
+        }
+
+        return isValid;
     }
 
     private void SpawnPopup(TerritoryPopupEntry entry)

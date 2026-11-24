@@ -98,11 +98,13 @@ public sealed class UI_InventoryView : MonoBehaviour
         if (_selectItemNameText != null)
         {
             _selectItemNameText.text = selectedItem.DisplayName;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(_selectItemNameText);
         }
 
         if (_selectItemStatusText != null)
         {
             _selectItemStatusText.text = selectedItem.StatusText;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(_selectItemStatusText);
         }
 
         if (_selectItemCostText != null)
@@ -122,6 +124,7 @@ public sealed class UI_InventoryView : MonoBehaviour
         if (_selectItemDescriptionText != null)
         {
             _selectItemDescriptionText.text = selectedItem.Description;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(_selectItemDescriptionText);
         }
     }
 
@@ -169,6 +172,7 @@ public sealed class UI_InventoryView : MonoBehaviour
         if (_equipButtonText != null)
         {
             _equipButtonText.text = buttonText ?? string.Empty;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(_equipButtonText);
         }
     }
 
@@ -182,6 +186,7 @@ public sealed class UI_InventoryView : MonoBehaviour
         if (_useButtonText != null)
         {
             _useButtonText.text = buttonText ?? string.Empty;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(_useButtonText);
         }
     }
 
@@ -193,6 +198,7 @@ public sealed class UI_InventoryView : MonoBehaviour
         if (_currentCostText != null)
         {
             _currentCostText.text = LobbyUiText.CostProgress(clampedCurrentCost, clampedMaxCost);
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(_currentCostText);
         }
 
         for (int index = 0; index < _costImageViews.Count; index++)
@@ -212,6 +218,7 @@ public sealed class UI_InventoryView : MonoBehaviour
         if (_selectItemDescriptionText != null)
         {
             _selectItemDescriptionText.text = text;
+            if (GameLanguage.IsEnglish) GameLanguage.Fit(_selectItemDescriptionText);
         }
     }
 

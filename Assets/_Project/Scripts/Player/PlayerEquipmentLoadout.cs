@@ -13,6 +13,7 @@ public readonly struct PlayerStatLoadout
     public float BasicAttackDelayScale { get; }
     public float SpecialGaugeCostScale { get; }
     public int SuccessfulHitCountForRecovery { get; }
+    public int SuccessfulHitCountToActivateRecovery { get; }
     public int RecoveryHealthOnTrigger { get; }
     public float RecoverySpecialGaugeOnTrigger { get; }
 
@@ -26,7 +27,8 @@ public readonly struct PlayerStatLoadout
         float specialGaugeCostScale,
         int successfulHitCountForRecovery,
         int recoveryHealthOnTrigger,
-        float recoverySpecialGaugeOnTrigger)
+        float recoverySpecialGaugeOnTrigger,
+        int successfulHitCountToActivateRecovery = 0)
     {
         MaxHealthBonus = maxHealthBonus;
         MaxSpecialGaugeBonus = maxSpecialGaugeBonus;
@@ -36,6 +38,7 @@ public readonly struct PlayerStatLoadout
         BasicAttackDelayScale = basicAttackDelayScale;
         SpecialGaugeCostScale = specialGaugeCostScale;
         SuccessfulHitCountForRecovery = successfulHitCountForRecovery;
+        SuccessfulHitCountToActivateRecovery = successfulHitCountToActivateRecovery;
         RecoveryHealthOnTrigger = recoveryHealthOnTrigger;
         RecoverySpecialGaugeOnTrigger = recoverySpecialGaugeOnTrigger;
     }
@@ -132,6 +135,7 @@ public sealed class EquipmentEffectCalculator
         float basicAttackDelayScale = 1f;
         float specialGaugeCostScale = 1f;
         int recoveryHitCount = 0;
+        int recoveryActivationHitCount = 0;
         int recoveryHealthAmount = 0;
         float recoverySpecialGaugeAmount = 0f;
 
@@ -163,6 +167,7 @@ public sealed class EquipmentEffectCalculator
                 ref basicAttackDelayScale,
                 ref specialGaugeCostScale,
                 ref recoveryHitCount,
+                ref recoveryActivationHitCount,
                 ref recoveryHealthAmount,
                 ref recoverySpecialGaugeAmount);
 
@@ -196,7 +201,8 @@ public sealed class EquipmentEffectCalculator
                 specialGaugeCostScale,
                 recoveryHitCount,
                 recoveryHealthAmount,
-                recoverySpecialGaugeAmount),
+                recoverySpecialGaugeAmount,
+                recoveryActivationHitCount),
             new PlayerInputLoadout(
                 enableHoldToMove,
                 holdMoveRepeatIntervalScale,
@@ -220,6 +226,7 @@ public sealed class EquipmentEffectCalculator
         ref float basicAttackDelayScale,
         ref float specialGaugeCostScale,
         ref int recoveryHitCount,
+        ref int recoveryActivationHitCount,
         ref int recoveryHealthAmount,
         ref float recoverySpecialGaugeAmount)
     {
@@ -236,6 +243,13 @@ public sealed class EquipmentEffectCalculator
             recoveryHitCount = recoveryHitCount == 0
                 ? statModifiers.SuccessfulHitCountForRecovery
                 : Mathf.Min(recoveryHitCount, statModifiers.SuccessfulHitCountForRecovery);
+        }
+
+        if (statModifiers.SuccessfulHitCountToActivateRecovery > 0)
+        {
+            recoveryActivationHitCount = recoveryActivationHitCount == 0
+                ? statModifiers.SuccessfulHitCountToActivateRecovery
+                : Mathf.Min(recoveryActivationHitCount, statModifiers.SuccessfulHitCountToActivateRecovery);
         }
 
         if (statModifiers.RecoveryHealthOnTrigger > 0)

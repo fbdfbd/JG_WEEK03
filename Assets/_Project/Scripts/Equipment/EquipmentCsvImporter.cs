@@ -86,7 +86,8 @@ public static class EquipmentCsvImporter
                     ReadOptionalFloat(columns, headerMap, "SpecialGaugeCostScale", 1f),
                     ReadOptionalInt(columns, headerMap, "SuccessfulHitCountForRecovery", 0),
                     ReadOptionalInt(columns, headerMap, "RecoveryHealthOnTrigger", 0),
-                    ReadOptionalFloat(columns, headerMap, "RecoverySpecialGaugeOnTrigger", 0f));
+                    ReadOptionalFloat(columns, headerMap, "RecoverySpecialGaugeOnTrigger", 0f),
+                    ReadOptionalInt(columns, headerMap, "SuccessfulHitCountToActivateRecovery", 0));
 
                 EquipmentCombatEffects combatEffects = new EquipmentCombatEffects(
                     ReadOptionalInt(columns, headerMap, "AdditionalHitFaceCountPerSide", 0),

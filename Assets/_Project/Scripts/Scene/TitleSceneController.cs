@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -16,9 +17,13 @@ public sealed class TitleSceneController : MonoBehaviour
     [Header("Fallback")]
     [SerializeField] private string trainingSceneName = "02_Training";
 
+    private TitleLanguagePanel languagePanel;
+
     private void Awake()
     {
         ResolveReferences();
+        if (settingButton != null) settingButton.gameObject.SetActive(true);
+        RefreshLanguage();
     }
 
     private void OnEnable()
@@ -30,6 +35,7 @@ public sealed class TitleSceneController : MonoBehaviour
     private void OnDisable()
     {
         UnsubscribeButtons();
+        languagePanel?.Hide();
     }
 
     public void OnStartButtonClicked()
@@ -65,7 +71,25 @@ public sealed class TitleSceneController : MonoBehaviour
 
     public void OnSettingButtonClicked()
     {
-        Debug.Log("TitleSceneController.OnSettingButtonClicked is ready. Add the settings flow here when the settings scene is prepared.");
+        if (settingButton == null) return;
+        languagePanel ??= new TitleLanguagePanel(settingButton, RefreshLanguage);
+        languagePanel.Show();
+    }
+
+    private void RefreshLanguage()
+    {
+        SetLabel(startButton, "시작");
+        SetLabel(exitButton, "종료");
+        SetLabel(settingButton, "설정");
+    }
+
+    private static void SetLabel(Button button, string korean)
+    {
+        if (button == null) return;
+        TMP_Text label = button.GetComponentInChildren<TMP_Text>(true);
+        if (label == null) return;
+        label.text = GameLanguage.Text(korean);
+        GameLanguage.Fit(label);
     }
 
     private void ResolveReferences()

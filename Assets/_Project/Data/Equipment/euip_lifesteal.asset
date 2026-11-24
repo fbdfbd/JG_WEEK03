@@ -15,8 +15,7 @@ MonoBehaviour:
   _equipmentId: euip_lifesteal
   _equipmentType: 4
   _displayName: "\uD761\uD608"
-  _description: "5\uD68C\uC758 \uCF64\uBCF4\uB9C8\uB2E4 \uCCB4\uB825\uACFC \uD2B9\uC218\uC790\uC6D0\uC744
-    3\uC529 \uD68C\uBCF5\uD569\uB2C8\uB2E4"
+  _description: "피격 없이 15타 적중 후 이후 7타마다 체력을 1 회복합니다. 피격 시 초기화됩니다"
   _cost: 6
   _price: 200
   _spriteAssetPath: Assets\_Project\Art
@@ -29,9 +28,10 @@ MonoBehaviour:
     moveDelayScale: 1
     basicAttackDelayScale: 1
     specialGaugeCostScale: 1
-    successfulHitCountForRecovery: 0
-    recoveryHealthOnTrigger: 3
-    recoverySpecialGaugeOnTrigger: 3
+    successfulHitCountForRecovery: 7
+    successfulHitCountToActivateRecovery: 15
+    recoveryHealthOnTrigger: 1
+    recoverySpecialGaugeOnTrigger: 0
   _combatEffects:
     additionalHitFaceCountPerSide: 0
     additionalHitDamageMultiplier: 1

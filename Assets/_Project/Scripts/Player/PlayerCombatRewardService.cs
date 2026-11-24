@@ -28,6 +28,7 @@ public sealed class PlayerCombatRewardService : MonoBehaviour
         playerStatus.RestoreGaugeOnConfirmedHit();
         playerStatus.RegisterConfirmedHitWithoutTakingDamage();
         playerComboTracker?.RegisterConfirmedHit();
+        CombatCameraShake.RequestConfirmedHit();
     }
 
     public void HandlePlayerDamaged()
